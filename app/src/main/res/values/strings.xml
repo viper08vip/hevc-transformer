@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HEVC to DLNA Caster</string>
+    <string name="select_video">Select Video</string>
+    <string name="select_renderer">Select Renderer</string>
+    <string name="cast">Cast</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_transcoding">Transcoding…</string>
+    <string name="status_streaming">Streaming…</string>
+    <string name="status_playing">Playing</string>
+    <string name="status_error">Error</string>
+    <string name="manual_ip_hint">Enter renderer IP address</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_renderer_selected">No renderer selected</string>
+</resources>
