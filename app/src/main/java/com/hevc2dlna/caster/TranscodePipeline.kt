@@ -5,7 +5,6 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.media.MediaMuxer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
