@@ -6,6 +6,7 @@ import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import java.io.OutputStream
+import java.nio.ByteBuffer
 
 class TranscodePipeline(private val context: Context) {
 

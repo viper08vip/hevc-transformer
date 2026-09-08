@@ -1,6 +1,7 @@
 package com.hevc2dlna.caster
 
 import android.util.Log
+import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.io.BufferedReader
@@ -189,7 +190,7 @@ class UpnpClient {
         }
     }
 
-    private fun findControlUrl(doc: Element): String? {
+    private fun findControlUrl(doc: Document): String? {
         val services = doc.getElementsByTagName("service")
         for (i in 0 until services.length) {
             val svc = services.item(i) as Element
