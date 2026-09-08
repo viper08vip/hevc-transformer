@@ -171,18 +171,20 @@ class MainActivity : AppCompatActivity() {
         val streamUrl = "http://127.0.0.1:$port/stream"
         tvStatus.text = getString(R.string.status_transcoding)
 
-        transcodeJob = lifecycleScope.launch {
+        transcodeJob = lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val pipeline = TranscodePipeline(this@MainActivity)
                 pipeline.transcode(videoUri, outputStream)
-                withContext(Dispatchers.IO) {
-                    upnpClient.setAvTransportUri(renderer, streamUrl)
-                    upnpClient.play(renderer)
+                upnpClient.setAvTransportUri(renderer, streamUrl)
+                upnpClient.play(renderer)
+                withContext(Dispatchers.Main) {
+                    tvStatus.text = getString(R.string.status_playing)
                 }
-                runOnUiThread { tvStatus.text = getString(R.string.status_playing) }
             } catch (e: Exception) {
                 e.printStackTrace()
-                runOnUiThread { tvStatus.text = "${getString(R.string.status_error)}: ${e.message}" }
+                withContext(Dispatchers.Main) {
+                    tvStatus.text = "${getString(R.string.status_error)}: ${e.message}"
+                }
             }
         }
     }

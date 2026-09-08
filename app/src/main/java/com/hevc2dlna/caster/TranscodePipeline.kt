@@ -5,9 +5,6 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.OutputStream
 
 class TranscodePipeline(private val context: Context) {
@@ -46,24 +43,18 @@ class TranscodePipeline(private val context: Context) {
         val videoNeedsTranscode = videoMime != "video/avc" && videoMime != "video/mp4v-es"
         val audioNeedsTranscode = audioMime != null && !isCompatibleAudio(audioMime)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                if (videoNeedsTranscode) {
-                    transcodeVideo(extractor, videoTrack, outputStream)
-                } else {
-                    streamCopyVideo(extractor, videoTrack, outputStream)
-                }
-
-                if (audioTrack != -1 && audioNeedsTranscode) {
-                    transcodeAudio(extractor, audioTrack, outputStream)
-                }
-
-                extractor.release()
-                outputStream.flush()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        if (videoNeedsTranscode) {
+            transcodeVideo(extractor, videoTrack, outputStream)
+        } else {
+            streamCopyVideo(extractor, videoTrack, outputStream)
         }
+
+        if (audioTrack != -1 && audioNeedsTranscode) {
+            transcodeAudio(extractor, audioTrack, outputStream)
+        }
+
+        extractor.release()
+        outputStream.flush()
     }
 
     private fun transcodeVideo(

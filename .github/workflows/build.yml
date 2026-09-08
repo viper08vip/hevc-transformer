@@ -21,12 +21,13 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.6
+          cache-cleanup: always
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
